@@ -1,6 +1,7 @@
 const {ObjectID} = require('mongodb')
 const { Task } = require('../../server/models/Task')
 const { Scrum } = require('../../server/models/Scrum')
+const { Project } = require('../../server/models/Project')
 
 const objectOneId = new ObjectID()
 const objectTwoId = new ObjectID()
@@ -27,9 +28,15 @@ function populateTask (done) {
   .then(() => done())
 }
 
+function populateProject (done) {
+  Project.deleteMany({})
+  .then(() => done())
+}
+
 module.exports = {
   objectOneId,
   objectTwoId,
   populateScrum,
-  populateTask
+  populateTask,
+  populateProject
 }

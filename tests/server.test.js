@@ -4,10 +4,12 @@ const request = require('supertest')
 const { app } = require('../server/server')
 const { Task } = require('../server/models/Task')
 const { Scrum } = require('../server/models/Scrum')
-const { populateScrum, populateTask, objectOneId, objectTwoId } = require('./seeds/seeds')
+const { Project } = require('../server/models/Project')
+const { populateScrum, populateTask, objectOneId, objectTwoId, populateProject } = require('./seeds/seeds')
 
 beforeEach(populateScrum)
 beforeEach(populateTask)
+beforeEach(populateProject)
 
 describe('POST /scrum', () => {
   let scrumData = {
@@ -102,4 +104,48 @@ describe('POST /task test cases', () => {
     })
   })
 
+})
+
+describe('POST /project', () => {
+  it('should create project', (done) => {
+    let projectData = {
+      "projectName": "Kishore",
+      "createdBy": "kishoregryllsdfs@gmail.com"
+    }
+    request(app)
+    .post('/project')
+    .send(projectData)
+    .expect(200)
+    .expect(res => {
+      expect(res.body._id).toExist()
+      expect(res.body.projectName).toBe(projectData.projectName)
+      expect(res.body.createdBy).toBe(projectData.createdBy)
+    })
+    .end((err, res) => {
+      if(err) return done(err)
+
+      Project.find({}).then(projects => {
+        expect(projects.length).toBe(1)
+        expect(projects[0]._id.toHexString()).toBe(res.body._id)
+        expect(projects[0].projectName).toBe(res.body.projectName)
+        expect(projects[0].createdBy).toBe(res.body.createdBy)
+        done(err)
+      }).catch(err => done(err))
+    })
+  })
+
+  it('should not create project on invalid data', (done) => {
+    request(app)
+    .post('/project')
+    .send({})
+    .expect(400)
+    .end((err, res) => {
+      if(err) return done(err)
+
+      Project.find({}).then(projects => {
+        expect(projects.length).toBe(0)
+        done(err)
+      }).catch(err => done(err))
+    })
+  })
 })

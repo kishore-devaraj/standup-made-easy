@@ -6,12 +6,21 @@ const _ = require('lodash')
 const db = require('./db/db')
 const { Task } = require('./models/Task')
 const { Scrum } = require('./models/Scrum')
+const { Project } = require('./models/Project')
 
 const app = express()
 app.use(bodyParser.json())
 
+app.post('/project', (req, res) => {
+    let body = _.pick(req.body, ['projectName', 'createdBy'])
+    const project = new Project(body)
+    project.save().then(project => {
+        res.send(project)
+    }).catch(err => res.status(400).send(err))
+})
+
 app.post('/task', (req, res) => {
-    let body = _.pick(req.body, ['yesterday', 'today', 'blocker', 'scrumId','submittedBy'])
+    let body = _.pick(req.body, ['yesterday', 'today', 'blocker', 'scrumId', 'submittedBy'])
     if (!ObjectId.isValid(body.scrumId)) return res.status(400).send('Invalid ScrumId')
 
     Scrum.findScrumById(body.scrumId)
@@ -30,7 +39,7 @@ app.post('/task', (req, res) => {
 })
 
 app.post('/scrum', (req, res) => {
-    let body = _.pick(req.body, ['name'])
+    let body = _.pick(req.body, ['name','projectId'])
     body['date'] = new Date().getTime()
     let scrum = new Scrum(body)
     scrum.save().then(scrum => {
