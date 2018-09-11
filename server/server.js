@@ -7,12 +7,23 @@ const db = require('./db/db')
 const { Task } = require('./models/Task')
 const { Scrum } = require('./models/Scrum')
 const { Project } = require('./models/Project')
+const { User } = require('./models/User')
 
 const app = express()
 app.use(bodyParser.json())
 
+app.post('/users', (req, res) => {
+    const body = _.pick(req.body, ['email', 'password'])
+    const user = new User(body)
+    user.save()
+    .then(user => user.generateAuthToken())
+    .then(token => {
+        res.set('x-auth', token).send(user)
+    }).catch(err => res.status(400).send(err))
+})
+
 app.post('/project', (req, res) => {
-    let body = _.pick(req.body, ['projectName', 'createdBy'])
+    const body = _.pick(req.body, ['projectName', 'createdBy'])
     const project = new Project(body)
     project.save().then(project => {
         res.send(project)
