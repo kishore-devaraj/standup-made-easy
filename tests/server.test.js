@@ -5,15 +5,17 @@ const { app } = require('../server/server')
 const { Task } = require('../server/models/Task')
 const { Scrum } = require('../server/models/Scrum')
 const { Project } = require('../server/models/Project')
-const { populateScrum, populateTask, objectOneId, objectTwoId, populateProject } = require('./seeds/seeds')
+const { populateScrum, populateTask, objectOneId, objectTwoId, populateProject, 
+          projectOneObjectId, projectTwoObjectId} = require('./seeds/seeds')
 
+beforeEach(populateProject)
 beforeEach(populateScrum)
 beforeEach(populateTask)
-beforeEach(populateProject)
 
 describe('POST /scrum', () => {
   let scrumData = {
-    "name": "Scrum 3"
+    "name": "Scrum 3",
+    "projectId": projectOneObjectId
   }
 
   it('should create a new scrum', (done) => {
@@ -125,10 +127,10 @@ describe('POST /project', () => {
       if(err) return done(err)
 
       Project.find({}).then(projects => {
-        expect(projects.length).toBe(1)
-        expect(projects[0]._id.toHexString()).toBe(res.body._id)
-        expect(projects[0].projectName).toBe(res.body.projectName)
-        expect(projects[0].createdBy).toBe(res.body.createdBy)
+        expect(projects.length).toBe(3)
+        expect(projects[2]._id.toHexString()).toBe(res.body._id)
+        expect(projects[2].projectName).toBe(res.body.projectName)
+        expect(projects[2].createdBy).toBe(res.body.createdBy)
         done(err)
       }).catch(err => done(err))
     })
@@ -143,7 +145,7 @@ describe('POST /project', () => {
       if(err) return done(err)
 
       Project.find({}).then(projects => {
-        expect(projects.length).toBe(0)
+        expect(projects.length).toBe(2)
         done(err)
       }).catch(err => done(err))
     })

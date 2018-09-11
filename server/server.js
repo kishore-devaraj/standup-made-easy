@@ -19,34 +19,39 @@ app.post('/project', (req, res) => {
     }).catch(err => res.status(400).send(err))
 })
 
+app.post('/scrum', (req, res) => {
+    let body = _.pick(req.body, ['name', 'projectId'])
+    body['date'] = new Date().getTime()
+    Project.findProjectById(body.projectId)
+    .then(project => {
+        let scrum = new Scrum(body)
+        project.scrums.push(scrum)
+        scrum.save().then(scrum => {
+            res.send(scrum)
+        }).catch(err => {
+            res.status(400).send(err)
+        })
+    }).catch(err => res.status(400).send(err))
+
+})
+
 app.post('/task', (req, res) => {
     let body = _.pick(req.body, ['yesterday', 'today', 'blocker', 'scrumId', 'submittedBy'])
     if (!ObjectId.isValid(body.scrumId)) return res.status(400).send('Invalid ScrumId')
 
     Scrum.findScrumById(body.scrumId)
-    .then(scrum => {
-        let task = new Task(body)
-        scrum.tasks.push(task)
-        Promise.all([task.save(), scrum.save()])
-        .then(values => res.send(task))
-        .catch(err => {
-            console.log(err)
+        .then(scrum => {
+            let task = new Task(body)
+            scrum.tasks.push(task)
+            Promise.all([task.save(), scrum.save()])
+                .then(values => res.send(task))
+                .catch(err => {
+                    console.log(err)
+                    res.status(400).send(err)
+                })
+        }).catch(err => {
             res.status(400).send(err)
         })
-    }).catch(err => {
-        res.status(400).send(err)
-    })
-})
-
-app.post('/scrum', (req, res) => {
-    let body = _.pick(req.body, ['name','projectId'])
-    body['date'] = new Date().getTime()
-    let scrum = new Scrum(body)
-    scrum.save().then(scrum => {
-        res.send(scrum)
-    }).catch(err => {
-        res.status(400).send(err)
-    })
 })
 
 app.listen(3000, () => {

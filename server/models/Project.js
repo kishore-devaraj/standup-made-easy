@@ -21,6 +21,10 @@ const ProjectSchema = new mongoose.Schema({
   }]
 })
 
+ProjectSchema.statics.findProjectById = function(projectId) {
+  return Project.findById(projectId)
+}
+
 ProjectSchema.methods.toJSON = function () {
   let project = this
   let projectObj = project.toObject()
