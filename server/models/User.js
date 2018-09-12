@@ -37,7 +37,8 @@ const UserSchema = new mongoose.Schema({
 
 // Models methods
 UserSchema.statics.findUserByCredentails = function (email, password) {
-    return User.findOne({email})
+    let user = this
+    return user.findOne({email})
     .then(user => {
         if (!user) {
             return Promise.reject('User not found')
@@ -51,8 +52,6 @@ UserSchema.statics.findUserByCredentails = function (email, password) {
                 }
             })
         })
-        
-        return user
     })
 }
 
@@ -82,6 +81,8 @@ UserSchema.methods.generateAuthToken = function () {
     let user = this
     let access = 'auth'
     let token = jwt.sign({_id: user._id.toHexString()}, 'someSecret')
+    // Below line need to be modified in the future
+    if(user.tokens.length !== 0) user.tokens = []
     user.tokens.push({access, token})
     return user.save().then(() => {
         return token

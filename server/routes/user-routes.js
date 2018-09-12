@@ -23,11 +23,16 @@ userRouter.route('/')
 
 userRouter.route('/signin')
   .post((req, res) => {
+    let foundUser
     const body = _.pick(req.body, ['email', 'password'])
     User.findUserByCredentails(body.email, body.password)
     .then(user => {
-      res.send(user)
-    }).catch(err => res.status(400).send())
+      foundUser = user
+      return user.generateAuthToken()
+    })
+    .then(token => {
+      res.set('x-auth', token).send(foundUser)
+    }).catch(err => res.status(400).send(err))
   })
 
 module.exports = {

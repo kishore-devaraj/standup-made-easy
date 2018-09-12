@@ -1,5 +1,6 @@
 const {ObjectID} = require('mongodb')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 const { Task } = require('../../server/models/Task')
 const { Scrum } = require('../../server/models/Scrum')
@@ -40,7 +41,7 @@ const seedProject = [{
 const seedUsers = [{
   _id: userOneObjectId, 
   email:'kishoregrylls@gmail.com',
-  password:'someDumbPasswordOne',
+  password: 'someDumbPasswordOne',
   tokens: [{
     access: 'auth',
     token: jwt.sign({_id: userOneObjectId, access: 'auth'}, 'someSecret').toString()
@@ -54,9 +55,6 @@ const seedUsers = [{
     token: jwt.sign({_id: userTwoObjectId, access: 'auth'}, 'someSecret').toString()
   }]
 }]
-
-
-
 
 function populateProject (done) {
   Project.deleteMany({})
@@ -81,7 +79,10 @@ function populateTask (done) {
 function populateUser (done) {
   User.deleteMany({})
   .then(() => {
-    return User.insertMany(seedUsers)
+    let user1 = new User(seedUsers[0]).save()
+    let user2 = new User(seedUsers[1]).save()
+
+    return Promise.all([user1, user2])
   }).then(() => done())
 }
 
