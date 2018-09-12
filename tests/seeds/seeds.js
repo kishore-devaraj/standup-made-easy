@@ -6,6 +6,7 @@ const { Task } = require('../../server/models/Task')
 const { Scrum } = require('../../server/models/Scrum')
 const { Project } = require('../../server/models/Project')
 const { User } = require('../../server/models/User')
+const { Organisation } = require('../../server/models/Organisation')
 
 const objectOneId = new ObjectID()
 const objectTwoId = new ObjectID()
@@ -86,6 +87,11 @@ function populateUser (done) {
   }).then(() => done())
 }
 
+function populateOrganisation (done) {
+  Organisation.deleteMany({})
+  .then(() => done())
+}
+
 module.exports = {
   objectOneId,
   objectTwoId,
@@ -97,5 +103,6 @@ module.exports = {
   populateTask,
   populateProject,
   populateUser,
-  seedUsers
+  seedUsers,
+  populateOrganisation
 }
