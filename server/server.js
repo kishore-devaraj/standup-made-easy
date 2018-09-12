@@ -5,6 +5,7 @@ const _ = require('lodash')
 
 const db = require('./db/db')
 const { userRouter } = require('./routes/user-routes')
+const { organisationRouter } = require('./routes/organisation-routes')
 const { Task } = require('./models/Task')
 const { Scrum } = require('./models/Scrum')
 const { Project } = require('./models/Project')
@@ -14,6 +15,7 @@ const { authenicate } = require('./middleware/authenticate')
 const app = express()
 app.use(bodyParser.json())
 app.use('/users', userRouter)
+app.use('/organisation', organisationRouter)
 
 app.post('/project', (req, res) => {
     const body = _.pick(req.body, ['projectName', 'createdBy'])
