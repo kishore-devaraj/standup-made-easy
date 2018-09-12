@@ -5,11 +5,6 @@ const userRouter = express.Router()
 const { authenicate } = require('../middleware/authenticate')
 const { User } = require('../models/User')
 
-userRouter.route('/me')
-  .get(authenicate, (req, res) => {
-    res.send(req.user)
-  })
-
 userRouter.route('/')
   .post((req, res) => {
     const body = _.pick(req.body, ['email', 'password'])
@@ -21,7 +16,22 @@ userRouter.route('/')
       }).catch(err => res.status(400).send(err))
   })
 
-userRouter.route('/signin')
+  userRouter.route('/me')
+  .get(authenicate, (req, res) => {
+    res.send(req.user)
+  })
+
+  userRouter.route('/me/token')
+  .delete(authenicate, (req, res) => {
+    const user = req.user
+    const token = req.token
+    user.removeToken(token)
+    .then(user => {
+      res.send({'message': 'Token deleted'})
+    }).catch(err => res.status(401).send())
+  })
+
+  userRouter.route('/signin')
   .post((req, res) => {
     let foundUser
     const body = _.pick(req.body, ['email', 'password'])

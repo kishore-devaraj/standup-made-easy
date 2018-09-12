@@ -113,3 +113,41 @@ describe('POST /user/signin', () => {
       .end(err => done(err))
   })
 })
+
+describe('DELETE /users/me/token', () => {
+  
+  it('should delete the token', (done) => {
+    request(app)
+    .delete('/users/me/token')
+    .set('x-auth', seedUsers[0].tokens[0].token)
+    .expect(200)
+    .expect(res => {
+      expect(res.body.message).toExist()
+    })
+    .end((err, res) => {
+      if (err) return done(err)
+      User.findById(userOneObjectId)
+      .then(user => {
+        expect(user.tokens.length).toBe(0)
+        done()
+      }).catch(err => done(err))
+    })
+  })
+
+  it('should not delete the token if does not exist', (done) => {
+    request(app)
+    .delete('/users/me/token')
+    .set('x-auth', '')
+    .expect(401)
+    .end((err, res) => {
+      if (err) return done(err)
+      User.find({})
+      .then(users => {
+        users.forEach( user => {
+          expect(user.tokens.length).toBe(1)
+        })
+        done()
+      }).catch(err => done(err))
+    })
+  })
+})
