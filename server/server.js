@@ -8,9 +8,14 @@ const { Task } = require('./models/Task')
 const { Scrum } = require('./models/Scrum')
 const { Project } = require('./models/Project')
 const { User } = require('./models/User')
+const { authenicate } = require('./middleware/authenticate')
 
 const app = express()
 app.use(bodyParser.json())
+
+app.get('/users/me', authenicate, (req, res) => {
+    res.send(req.user)
+})
 
 app.post('/users', (req, res) => {
     const body = _.pick(req.body, ['email', 'password'])

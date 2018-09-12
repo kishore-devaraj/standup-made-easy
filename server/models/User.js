@@ -34,6 +34,20 @@ const UserSchema = new mongoose.Schema({
     }]
 })
 
+UserSchema.statics.findUserByToken = function (token) {
+    let decoded
+    try {
+        decoded = jwt.verify(token, 'someSecret')
+    } catch (e) {
+        return Promise.reject()
+    }
+    return User.findOne({
+        _id : decoded._id,
+        'tokens.access': 'auth',
+        'tokens.token': token
+    })
+}
+
 UserSchema.methods.toJSON = function () {
     let user = this
     let userObject = user.toObject()
@@ -45,8 +59,7 @@ UserSchema.methods.generateAuthToken = function () {
     let access = 'auth'
     let token = jwt.sign({_id: user._id.toHexString()}, 'someSecret')
     user.tokens.push({access, token})
-    return user.save()
-    .then((user) => {
+    return user.save().then(() => {
         return token
     })
 }
