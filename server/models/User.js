@@ -35,6 +35,27 @@ const UserSchema = new mongoose.Schema({
     }]
 })
 
+// Models methods
+UserSchema.statics.findUserByCredentails = function (email, password) {
+    return User.findOne({email})
+    .then(user => {
+        if (!user) {
+            return Promise.reject('User not found')
+        }
+        return new Promise((resolve, reject) => {
+            bcrypt.compare(password, user.password, (err, res) => {
+                if (res) {
+                    resolve(user)
+                } else {
+                    reject('Password not matching')
+                }
+            })
+        })
+        
+        return user
+    })
+}
+
 UserSchema.statics.findUserByToken = function (token) {
     let decoded
     try {
@@ -49,6 +70,8 @@ UserSchema.statics.findUserByToken = function (token) {
     })
 }
 
+
+// Instance methods
 UserSchema.methods.toJSON = function () {
     let user = this
     let userObject = user.toObject()

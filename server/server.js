@@ -4,6 +4,7 @@ const { ObjectId } = require('mongodb')
 const _ = require('lodash')
 
 const db = require('./db/db')
+const { userRouter } = require('./routes/user-routes')
 const { Task } = require('./models/Task')
 const { Scrum } = require('./models/Scrum')
 const { Project } = require('./models/Project')
@@ -12,20 +13,7 @@ const { authenicate } = require('./middleware/authenticate')
 
 const app = express()
 app.use(bodyParser.json())
-
-app.get('/users/me', authenicate, (req, res) => {
-    res.send(req.user)
-})
-
-app.post('/users', (req, res) => {
-    const body = _.pick(req.body, ['email', 'password'])
-    const user = new User(body)
-    user.save()
-    .then(user => user.generateAuthToken())
-    .then(token => {
-        res.set('x-auth', token).send(user)
-    }).catch(err => res.status(400).send(err))
-})
+app.use('/users', userRouter)
 
 app.post('/project', (req, res) => {
     const body = _.pick(req.body, ['projectName', 'createdBy'])
