@@ -6,6 +6,7 @@ const _ = require('lodash')
 const db = require('./db/db')
 const { userRouter } = require('./routes/user-routes')
 const { organisationRouter } = require('./routes/organisation-routes')
+const { projectRouter } = require('./routes/project-routes')
 const { Task } = require('./models/Task')
 const { Scrum } = require('./models/Scrum')
 const { Project } = require('./models/Project')
@@ -16,14 +17,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use('/users', userRouter)
 app.use('/organisation', organisationRouter)
-
-app.post('/project', (req, res) => {
-    const body = _.pick(req.body, ['projectName', 'createdBy'])
-    const project = new Project(body)
-    project.save().then(project => {
-        res.send(project)
-    }).catch(err => res.status(400).send(err))
-})
+app.use('/project', projectRouter)
 
 app.post('/scrum', (req, res) => {
     let body = _.pick(req.body, ['name', 'projectId'])

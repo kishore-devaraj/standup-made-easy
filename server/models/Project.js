@@ -1,25 +1,35 @@
-const {mongoose} = require('../db/db')
+const uniqueValidator = require('mongoose-unique-validator')
 const _ = require('lodash')
+
+const {mongoose} = require('../db/db')
 
 const ProjectSchema = new mongoose.Schema({
   projectName: {
     type: String,
+    required: true,
+    trim: true,
     unique: true,
-    required: true,
-    trim: true,
     minLength: 1
-  }, 
-  createdBy: {
-    type: String,
+  },
+  _organisationId: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
-    trim: true,
-    minLength: 1
+    ref: 'Organisation'
+  },
+  _createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
   },
   scrums:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Scrum'
   }]
 })
+
+
+// ProjectSchema.index({projectName: 1, _organisationId: 1}, {unique: true})
+ProjectSchema.plugin(uniqueValidator)
 
 ProjectSchema.statics.findProjectById = function(projectId) {
   return Project.findById(projectId)
@@ -28,8 +38,26 @@ ProjectSchema.statics.findProjectById = function(projectId) {
 ProjectSchema.methods.toJSON = function () {
   let project = this
   let projectObj = project.toObject()
-  return _.pick(projectObj, ['_id','projectName','createdBy'])
+  let resBody = _.pick(projectObj, ['_id','projectName','_createdBy'])
+  
+
+  // Sending the projectName alone in the response
+  let projectName_org = resBody.projectName
+  projectName_org = projectName_org.split(' ')
+  projectName_org.shift()
+  resBody.projectName = projectName_org.join(' ')
+
+  return resBody
 }
+
+ProjectSchema.pre('save', function (next) {
+  let project = this
+  let projectName = project._organisationId + ' ' + project.projectName
+  project.projectName = projectName
+  next()
+})
+
+
 
 
 const Project = mongoose.model('Project', ProjectSchema)

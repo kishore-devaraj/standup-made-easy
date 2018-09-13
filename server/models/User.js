@@ -1,13 +1,15 @@
 const validator = require('validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const uniqueValidator = require('mongoose-unique-validator')
 const _ = require('lodash')
+
 
 const { mongoose } = require('../db/db')
 
 const UserSchema = new mongoose.Schema({
     email: {
-        type: String,
+        type: mongoose.Schema.Types.String,
         required: true,
         trim: true,
         unique: true,
@@ -34,6 +36,10 @@ const UserSchema = new mongoose.Schema({
         }
     }]
 })
+
+// UserSchema.index({email: 1}, {unique: true})
+UserSchema.plugin(uniqueValidator)
+
 
 // Models methods
 UserSchema.statics.findUserByCredentails = function (email, password) {
