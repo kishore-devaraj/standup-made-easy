@@ -5,12 +5,13 @@ const { app } = require('../server/server')
 const { Task } = require('../server/models/Task')
 const { Scrum } = require('../server/models/Scrum')
 const { Project } = require('../server/models/Project')
-const { populateScrum, populateTask, objectOneId, objectTwoId, populateProject, 
+const { populateScrum, populateTask, populateProject, objectOneId, objectTwoId, 
           projectOneObjectId, projectTwoObjectId} = require('./seeds/seeds')
 
-beforeEach(populateProject)
+
 beforeEach(populateScrum)
 beforeEach(populateTask)
+beforeEach(populateProject)
 
 describe('POST /scrum', () => {
   let scrumData = {
@@ -106,48 +107,4 @@ describe('POST /task test cases', () => {
     })
   })
 
-})
-
-describe('POST /project', () => {
-  it('should create project', (done) => {
-    let projectData = {
-      "projectName": "Kishore",
-      "createdBy": "kishoregryllsdfs@gmail.com"
-    }
-    request(app)
-    .post('/project')
-    .send(projectData)
-    .expect(200)
-    .expect(res => {
-      expect(res.body._id).toExist()
-      expect(res.body.projectName).toBe(projectData.projectName)
-      expect(res.body.createdBy).toBe(projectData.createdBy)
-    })
-    .end((err, res) => {
-      if(err) return done(err)
-
-      Project.find({}).then(projects => {
-        expect(projects.length).toBe(3)
-        expect(projects[2]._id.toHexString()).toBe(res.body._id)
-        expect(projects[2].projectName).toBe(res.body.projectName)
-        expect(projects[2].createdBy).toBe(res.body.createdBy)
-        done(err)
-      }).catch(err => done(err))
-    })
-  })
-
-  it('should not create project on invalid data', (done) => {
-    request(app)
-    .post('/project')
-    .send({})
-    .expect(400)
-    .end((err, res) => {
-      if(err) return done(err)
-
-      Project.find({}).then(projects => {
-        expect(projects.length).toBe(2)
-        done(err)
-      }).catch(err => done(err))
-    })
-  })
 })

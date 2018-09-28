@@ -17,6 +17,9 @@ const projectTwoObjectId = new ObjectID()
 const userOneObjectId = new ObjectID()
 const userTwoObjectId = new ObjectID()
 
+const orgOneObjectId = new ObjectID()
+const orgTwoObjectId = new ObjectID()
+
 const seedScrum = [{
   "name": "Scrum 1",
   "date": new Date(),
@@ -32,11 +35,13 @@ const seedScrum = [{
 const seedProject = [{
   "_id": projectOneObjectId,
   "projectName": "Augury",
-  "createdBy": "kishoregrylls@gmail.com"
+  "_createdBy": userOneObjectId,
+  "_organisationId": orgOneObjectId
 }, {
   "_id": projectTwoObjectId,
   "projectName": "Coffee",
-  "createdBy": "kishoregrylls@gmail.com"
+  "_createdBy": userTwoObjectId,
+  "_organisationId": orgTwoObjectId
 }]
 
 const seedUsers = [{
@@ -57,12 +62,28 @@ const seedUsers = [{
   }]
 }]
 
+const seedOrg = [{
+  _id: orgOneObjectId,
+  name: "Tringapps",
+  _createdBy: userOneObjectId,
+  projects : [
+    projectOneObjectId
+  ]
+},{
+  _id: orgTwoObjectId,
+  name: "Google",
+  _createdBy: userTwoObjectId,
+  projects : [
+    projectTwoObjectId
+  ]
+}]
+
 function populateProject (done) {
   Project.deleteMany({})
   .then(() => {
     Project.insertMany(seedProject)
     .then(() => done())
-  })
+  }).catch(err => done(err))
 }
 
 function populateScrum (done) {
@@ -70,11 +91,13 @@ function populateScrum (done) {
   .then(() => {
     return Scrum.insertMany(seedScrum)
   }).then(() => done())
+  .catch(err => done(err))
 }
 
 function populateTask (done) {
   Task.deleteMany({})
   .then(() => done())
+  .catch(err => done(err))
 }
 
 function populateUser (done) {
@@ -85,11 +108,18 @@ function populateUser (done) {
 
     return Promise.all([user1, user2])
   }).then(() => done())
+  .catch(err => done(err))
 }
 
 function populateOrganisation (done) {
   Organisation.deleteMany({})
-  .then(() => done())
+  .then(() => {
+    let org1 = new Organisation(seedOrg[0]).save()
+    let org2 = new Organisation(seedOrg[1]).save()
+
+    return Promise.all([org1, org2])
+  }).then(() => done())
+  .catch(err => done(err))
 }
 
 module.exports = {
@@ -99,6 +129,8 @@ module.exports = {
   projectTwoObjectId,
   userOneObjectId,
   userTwoObjectId,
+  orgOneObjectId,
+  orgTwoObjectId,
   populateScrum,
   populateTask,
   populateProject,
