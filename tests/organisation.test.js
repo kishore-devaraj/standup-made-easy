@@ -26,7 +26,7 @@ describe('POST /organisation', () => {
       if(err) return done(err)
       
       Organisation.find({}).then(organisations => {
-        expect(organisations.length).toBe(1)
+        expect(organisations.length).toBe(3)
           return Promise.resolve()
       .then(() => {
         return Organisation.findById({_id: res.body._id})
@@ -54,7 +54,7 @@ describe('POST /organisation', () => {
       if(err) return done(err)
       
       Organisation.find({}).then(organisations => {
-        expect(organisations.length).toBe(0)
+        expect(organisations.length).toBe(2)
         done()
       }).catch(err => done(err))
     })
@@ -70,7 +70,7 @@ describe('POST /organisation', () => {
       if(err) return done(err)
       
       Organisation.find({}).then(organisations => {
-        expect(organisations.length).toBe(0)
+        expect(organisations.length).toBe(2)
         done()
       }).catch(err => done(err))
     })
