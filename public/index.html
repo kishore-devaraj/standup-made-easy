@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+</head>
+
+<body>
+    <script id="main-page" type="x-handlebars-template">
+        <header id="main-page-header"></header>
+        <main id="main">
+            <section id="project-section">
+
+            </section>
+            <section id="scrum-section">
+                <article class="scrum-min-card">
+                    <header class="scrum-min-header"> Coffee Scrum </header>
+                    <div class="scrum-min-body">
+                        <div>Organised By: Kishore Devaraj </div>
+                        <div>Members Present: 8 </div>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </script>
+
+    <script id="scrum-min" type="x-handlebars-template">
+        <article class="scrum-min-card">
+            <header class="scrum-min-header"> {{scrumName}} </header>
+            <div class="scrum-min-body">
+                Organised By: {{organisedBy}}
+                Members Present: {{membersPresent}}
+            </div>
+        </article>
+    </script>
+
+    <div id="app"></div>
+
+    <!-- JS Library Dependencies -->
+    <script src="scripts/jquery/dist/jquery.min.js"></script>
+    <!-- <script src="scripts/axios/dist/axios.min.js"></script> -->
+    <script src="scripts/handlebars/dist/handlebars.min.js"></script>
+    <script src="scripts/vanilla-router/dist/vanilla-router.min.js"></script>
+    <script src="js/main.js"></script>
+
+
+    <!-- 
+         Reference to use sematic tags
+         https://stackoverflow.com/questions/4781077/html5-best-practices-section-header-aside-article-elements
+        -->
+</body>
+
+</html>

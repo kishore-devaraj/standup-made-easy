@@ -14,6 +14,12 @@ const { User } = require('./models/User')
 const { authenicate } = require('./middleware/authenticate')
 
 const app = express()
+
+// Static files rendering
+app.use(express.static(__dirname + '/../public'))
+// Using node_modules in the client side
+app.use('/scripts', express.static(`${__dirname}/../node_modules/`))
+
 app.use(bodyParser.json())
 app.use('/users', userRouter)
 app.use('/organisation', organisationRouter)
