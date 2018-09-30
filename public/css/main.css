@@ -1,10 +1,24 @@
+@font-face {
+    font-family: 'lato-reg';
+    src: url('../assets/fonts//lato-reg/lato-regular-webfont.woff') format('woff'),
+        url('../assets/fonts//lato-reg/lato-regular-webfont.woff2') format('woff2'),
+        url('../assets/fonts/lato-reg/lato-regular-webfont.ttf') format('tff')
+}
+
+@font-face {
+    font-family: 'lato-bold';
+    src: url('../assets/fonts/lato-bold/lato-bold-webfont.woff') format('woff'),
+        url('../assets/fonts/lato-bold/lato-bold-webfont.woff2') format('woff2'),
+        url('../assets/fonts/lato-bold/lato-bold-webfont.tff') format('tff')
+}
+
 body {
     padding: 0;
     margin: 0;
     border: 0;
     box-sizing: border-box;
     font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'lato-reg';
     width: 100%;
     height: 100vh;
 }
@@ -18,50 +32,76 @@ body {
 
 #main-page-header {
     flex: 0 0 6em;
-    border:1px solid grey;
+    background-color: #4C31EC;
+    display: flex;
+}
+
+#main-page-header > .header-title {
+    flex: 1 1 auto;
+    font-size: 1.3em;
+    font-family: 'lato-bold';
+    display: flex;
+    align-items: center;
+    padding: 1em 0 1em 2em;
+    color: white;
 }
 
 #main {
     flex: 1 1 auto;
-    border:1px solid grey;
     display: flex;
 }
 
 #project-section {
     flex: 0 0 19em;
-    border: 1px solid grey;
 }
 
 #scrum-section {
     flex: 1 1 auto;
-    border: 1px solid grey;
     display: flex;
     flex-flow: row wrap;
+    background-color: #FAFAFA;
 }
 
 .scrum-min-card {
-    height: 8em;
-    width: 15em;
+    flex: 0 0 auto;
+    height: 12em;
     margin: 2em;
-    padding: 1em;
-    border: 1px solid yellow;
+    padding: 1em 1em 0 1em;
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: #FFF;
 }
 
 .scrum-min-header {
+    flex: 0 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.2em;
-    border-bottom: 0.5px solid yellow;
+    padding: 0.2em 0.2em 0.5em 0.2em;
+    font-family: 'lato-bold';
+    font-size: 1.2em;
+    color: #000;
+    border-bottom: 0.5px solid  rgba(0,0,0,0.5);
 }
 
 .scrum-min-body {
+    flex: 1 1 auto;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
     padding: 0.5em;
 }
 
 .scrum-min-body > div {
     flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+}
+
+.scrum-min-body > div:nth-child(even) {
+    color: rgba(0,0,0,0.66);
+    margin-bottom: 0.8em;
+}
+
+.scrum-min-body > div:nth-child(odd) {
+    color: black;
 }
