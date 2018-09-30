@@ -19,32 +19,43 @@
         </header>
         <main id="main">
             <section id="project-section">
-
+                <ul>
+                    <li class="project-name"> Mango </li>
+                    <li class="project-name"> Litchi </li>
+                    <li class="project-name"> BlueBerry </li>
+                    <li class="project-name"> Guava </li>
+                </ul>
             </section>
             <section id="scrum-section">
-                <article class="scrum-min-card">
-                    <header class="scrum-min-header"> StrawBerry | Scrum - MOM </header>
-                    <div class="scrum-min-body">
-                        <div>Organised By</div> 
-                        <div>Kishore Devaraj</div>
-                        <div>Members Present</div>
-                        <div>8</div>
-                        <div>Date</div>
-                        <div>30th Sept, 2018 </div>
-                    </div>
-                </article>
+                {{#each scrum}}
+                    <article class="scrum-min-card">
+                        <header class="scrum-min-header"> StrawBerry | Scrum - MOM </header>
+                        <div class="scrum-min-body">
+                            <div>Organised By</div> 
+                            <div>Kishore Devaraj</div>
+                            <div>Members Present</div>
+                            <div>8</div>
+                            <div>Date</div>
+                            <div>30th Sept, 2018 </div>
+                        </div>
+                    </article>
+                {{/each}}
             </section>
         </main>
     </script>
 
     <script id="scrum-min" type="x-handlebars-template">
-        <article class="scrum-min-card">
-            <header class="scrum-min-header"> {{scrumName}} </header>
-            <div class="scrum-min-body">
-                Organised By: {{organisedBy}}
-                Members Present: {{membersPresent}}
-            </div>
-        </article>
+            <article class="scrum-min-card">
+                <header class="scrum-min-header"> StrawBerry | Scrum - MOM </header>
+                <div class="scrum-min-body">
+                    <div>Organised By</div> 
+                    <div>Kishore Devaraj</div>
+                    <div>Members Present</div>
+                    <div>8</div>
+                    <div>Date</div>
+                    <div>30th Sept, 2018 </div>
+                </div>
+            </article>
     </script>
 
     <div id="app"></div>
