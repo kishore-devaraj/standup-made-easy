@@ -92,7 +92,7 @@ html, body {
 .scrum-min-card {
     flex: 0 0 auto;
     height: 14em;
-    margin: 1.8em;
+    margin: 1.7em;
     padding: 1em 1em 0 1em;
     display: flex;
     flex-flow: column nowrap;
