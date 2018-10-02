@@ -44,4 +44,12 @@ window.addEventListener('load', () => {
         }]
     })
     app.innerHTML = homeTemplateHtml
+
+    // Adding Event listeners
+    document.getElementById('search-form').onsubmit = function (e) {
+        e.preventDefault()
+        let searchValue = document.getElementById('search-bar').value
+        document.getElementById('search-bar').value = ''
+        console.log(`Search input: ${searchValue}`)
+    }
 })

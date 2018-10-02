@@ -41,12 +41,28 @@ html, body {
 
 #main-page-header > .header-title {
     flex: 1 1 auto;
-    font-size: 1.3em;
+    font-size: 1.5em;
     font-family: 'lato-bold';
     display: flex;
     align-items: center;
-    padding: 1em 0 1em 2em;
+    padding-left: 2em;
     color: white;
+}
+
+#main-page-header > .header-right {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 2em;
+}
+
+#search-bar {
+    min-width: 18em;
+    height: 1.5em;
+    border-radius:  5px;
+    padding: 1em;
+    font-size: 1.2em;
 }
 
 #main {
