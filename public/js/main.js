@@ -5,7 +5,43 @@ window.addEventListener('load', () => {
     const homeTemplate = Handlebars.compile(document.getElementById('main-page').innerHTML)
     const scrumMinCard = document.getElementById('scrum-min').innerHTML
     const homeTemplateHtml = homeTemplate({
-        'scrum': [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        'scrum': [{
+            'organiserName': 'Kishore Devaraj',
+            'membersPresent' : 8,
+            'date': '8th Sept, 2018'
+        },{
+            'organiserName': 'Kishore Devaraj',
+            'membersPresent' : 8,
+            'date': '8th Sept, 2018'
+        },{
+            'organiserName': 'Kishore Devaraj',
+            'membersPresent' : 8,
+            'date': '8th Sept, 2018'
+        },{
+            'organiserName': 'Kishore Devaraj',
+            'membersPresent' : 8,
+            'date': '8th Sept, 2018'
+        },{
+            'organiserName': 'Kishore Devaraj',
+            'membersPresent' : 8,
+            'date': '8th Sept, 2018'
+        },{
+            'organiserName': 'Kishore Devaraj',
+            'membersPresent' : 8,
+            'date': '8th Sept, 2018'
+        },{
+            'organiserName': 'Kishore Devaraj',
+            'membersPresent' : 8,
+            'date': '8th Sept, 2018'
+        },{
+            'organiserName': 'Kishore Devaraj',
+            'membersPresent' : 8,
+            'date': '8th Sept, 2018'
+        },{
+            'organiserName': 'Kishore Devaraj',
+            'membersPresent' : 8,
+            'date': '8th Sept, 2018'
+        }]
     })
     app.innerHTML = homeTemplateHtml
 })
