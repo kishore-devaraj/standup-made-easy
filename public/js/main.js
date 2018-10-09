@@ -21,7 +21,43 @@ window.addEventListener('load', () => {
     router.add('/', () => {
         const scrumMinCard = document.getElementById('scrum-min').innerHTML
         const homeTemplateHtml = homeTemplate({
-            'scrum': [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            'scrum': [{
+                'organiserName': 'Kishore Devaraj',
+                'membersPresent' : 8,
+                'date': '8th Sept, 2018'
+            },{
+                'organiserName': 'Kishore Devaraj',
+                'membersPresent' : 8,
+                'date': '8th Sept, 2018'
+            },{
+                'organiserName': 'Kishore Devaraj',
+                'membersPresent' : 8,
+                'date': '8th Sept, 2018'
+            },{
+                'organiserName': 'Kishore Devaraj',
+                'membersPresent' : 8,
+                'date': '8th Sept, 2018'
+            },{
+                'organiserName': 'Kishore Devaraj',
+                'membersPresent' : 8,
+                'date': '8th Sept, 2018'
+            },{
+                'organiserName': 'Kishore Devaraj',
+                'membersPresent' : 8,
+                'date': '8th Sept, 2018'
+            },{
+                'organiserName': 'Kishore Devaraj',
+                'membersPresent' : 8,
+                'date': '8th Sept, 2018'
+            },{
+                'organiserName': 'Kishore Devaraj',
+                'membersPresent' : 8,
+                'date': '8th Sept, 2018'
+            },{
+                'organiserName': 'Kishore Devaraj',
+                'membersPresent' : 8,
+                'date': '8th Sept, 2018'
+            }]
         })
         app.innerHTML = homeTemplateHtml
     })
@@ -31,5 +67,13 @@ window.addEventListener('load', () => {
     })
 
     // Navigate the router to the current location
-    router.navigateTo(window.location.pathname)
+    router.navigateTo(window.location.pathname)    
+
+    // Adding Event listeners
+    document.getElementById('search-form').onsubmit = function (e) {
+        e.preventDefault()
+        let searchValue = document.getElementById('search-bar').value
+        document.getElementById('search-bar').value = ''
+        console.log(`Search input: ${searchValue}`)
+    }
 })

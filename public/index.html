@@ -15,7 +15,14 @@
         <header id="main-page-header">
             <div class="header-title">Stand up made Easy</div>
             <div class="header-right">
-                
+                <form id="search-form" name="search-form">
+                    <input type="text" 
+                        id="search-bar" 
+                        name="search-bar"
+                        autocomplete="off"
+                        placeholder="Who do you want to search?"
+                        />
+                </form>
             </div>
         </header>
         <main id="main">
@@ -33,11 +40,11 @@
                         <header class="scrum-min-header"> StrawBerry | Scrum - MOM </header>
                         <div class="scrum-min-body">
                             <div>Organised By</div> 
-                            <div>Kishore Devaraj</div>
+                            <div>{{organiserName}}</div>
                             <div>Members Present</div>
-                            <div>8</div>
+                            <div>{{membersPresent}}</div>
                             <div>Date</div>
-                            <div>30th Sept, 2018 </div>
+                            <div>{{date}}</div>
                         </div>
                     </article>
                 {{/each}}
