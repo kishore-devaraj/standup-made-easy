@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const bodyParser = require('body-parser')
 const { ObjectId } = require('mongodb')
 const _ = require('lodash')
@@ -59,6 +60,9 @@ app.post('/task', (req, res) => {
             res.status(400).send(err)
         })
 })
+
+// Catch all method SSR 
+app.use((req, res) => res.sendFile(path.resolve(`${__dirname}/../public/index.html`)))
 
 app.listen(3000, () => {
     console.log(`Express app listening at 3000`)

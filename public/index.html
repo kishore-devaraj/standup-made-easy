@@ -7,7 +7,8 @@
     <title>Standup Made Easy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-</head>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/login.css" />
+ </head>
 
 <body>
     <script id="main-page" type="x-handlebars-template">
@@ -56,6 +57,20 @@
                     <div>30th Sept, 2018 </div>
                 </div>
             </article>
+    </script>
+
+    <script id="login-template" type="x-handlebars-template">
+        <section class="login-container">
+            Login Page is under construction.
+        </section>
+    </script>
+
+    <script id="error-template" type="x-handlebars-template">
+        <section id="error-container">
+            <h1 class="error-title">{{title}}<h1>
+                <br />
+            <div class="error-messsage">{{message}}</div>
+        </section>
     </script>
 
     <div id="app"></div>

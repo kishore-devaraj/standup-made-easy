@@ -137,3 +137,12 @@ html, body {
 .scrum-min-body > div:nth-child(odd) {
     color: black;
 }
+
+
+/* Error Template Stylings */
+#error-container {
+    width: 100%;
+    height: 10em;
+    color: red;
+    border: 1px solid red;
+}

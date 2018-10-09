@@ -1,7 +1,7 @@
 const { User } = require('../models/User')
 
 function authenicate (req, res, next) {
-  const token = req.get('x-auth')
+ const token = req.get('x-auth')
   User.findUserByToken(token)
   .then(user => {
       if(!user) {
